@@ -11,4 +11,14 @@ sub read_line {
     return $str;
 }
 
+# Recursive factorial
+sub factorial {
+    my $n = shift;
+    if ( $n == 2 ) {
+        return 2;
+    } else {
+        return $n * factorial($n - 1);
+    }
+}
+
 1;
