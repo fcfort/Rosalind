@@ -21,4 +21,9 @@ sub factorial {
     }
 }
 
+# Copied from http://www.perlmonks.org/?node_id=500235
+sub hamming_distance {
+   return ($_[0] ^ $_[1]) =~ tr/\001-\255//;
+}
+
 1;
