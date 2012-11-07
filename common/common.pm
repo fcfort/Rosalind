@@ -27,4 +27,20 @@ sub hamming_distance {
    return ($_[0] ^ $_[1]) =~ tr/\001-\255//;
 }
 
+# Reads DNA in FASTA format and returns a hash map mapping
+# ID to DNA string
+sub fasta_reader { 
+	my %fasta;
+    my $key = '';
+	while(defined(my $line = read_line()) ) {
+        if ( $line =~ /^>/ ) { 
+            $key = $line; 
+            $key =~ s/^>//;
+        } else {
+		    $fasta{$key} .= $line;	
+            }
+	}
+	return \%fasta;
+}
+
 1;
