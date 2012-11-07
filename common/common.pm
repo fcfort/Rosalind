@@ -7,6 +7,7 @@ package Common;
 # Stupid function to get by problems with unix/dos files
 sub read_line {
     my $str = <>;
+    return undef if not defined $str;
     $str =~ s/[\r\n]//g;
     return $str;
 }
