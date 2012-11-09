@@ -43,4 +43,10 @@ sub fasta_reader {
 	return \%fasta;
 }
 
+# Creates random DNA strings of length n
+sub generate_dna {
+    my $n = shift;
+    return join("", map { (qw/G T C A/)[rand(4)] } 0 .. $n - 1);
+}
+
 1;
