@@ -150,4 +150,12 @@ sub dna_to_protein {
     return rna_to_protein(dna_to_rna($dna));
 }
 
+sub permute {
+    my $last = pop @_;
+    unless (@_) {
+        return map [$_], @$last;
+    }
+    return map { my $left = $_; map [@$left, $_], @$last } permute(@_);
+}
+
 1;
