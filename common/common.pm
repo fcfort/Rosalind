@@ -51,11 +51,18 @@ sub generate_dna {
     return join("", map { (qw/G T C A/)[rand(4)] } 0 .. $n - 1);
 }
 
+# returns complement of a dna string
+sub complement {
+    my $dna = shift;
+    $dna =~ tr/ATCG/TAGC/;
+    return $dna;
+
+}
+
 # Given a string returns rev compl of the string
 sub reverse_complement {
     my $dna = shift;
-    $dna =~ tr/ATCG/TAGC/;
-    return join("", reverse split //, $dna);
+    return join("", reverse split //, complement($dna));
 }
 
 # Encodes a given DNA string to RNA
