@@ -31,18 +31,41 @@ sub hamming_distance {
 
 # Reads DNA in FASTA format and returns a hash map mapping
 # ID to DNA string
-sub fasta_reader { 
-	my %fasta;
+sub fasta_reader { 	
+    my $content;
+    while(defined(my $line = read_line()) ) {
+        $content .= $line;
+    }
+	return parse_fasta($content);
+}
+
+sub parse_fasta {
+    my $content = shift;
+    my %fasta;
     my $key = '';
-	while(defined(my $line = read_line()) ) {
+    
+    for my $line (split /\r?\n/, $content) {
         if ( $line =~ /^>/ ) { 
             $key = $line; 
             $key =~ s/^>//;
         } else {
-		    $fasta{$key} .= $line;	
-            }
+    	    $fasta{$key} .= $line;	
+        }
 	}
 	return \%fasta;
+}
+
+# Returns a list of positions that match the given regular expression in the given string
+# From http://stackoverflow.com/questions/4685905/find-all-possible-starting-positions-of-a-regular-expression-match-in-perl-incl
+# per Michael Carman's solution, corrected
+sub get_match_positions { 
+    my ($re, $str) = @_;
+    my @pos;
+    while ($str =~ /\G.*?($re)/) {
+        push @pos, $-[1];
+        pos $str = $-[1] + 1
+    }
+    return @pos;
 }
 
 # Creates random DNA strings of length n
